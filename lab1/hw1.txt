@@ -1,0 +1,258 @@
+1.1v)
+	/ A S C I I (enter)
+	g g
+	/ I n s t r u c t i o n s (enter)
+	g g
+	/ H T M L (enter)
+	g g
+	/ h u n t (enter)
+	$
+	0
+	g g
+	: q ! (enter)
+
+1.2v)
+	: 1 6 (enter)
+	d d
+	/ D E L E T E M E (enter)
+	d d
+	g g
+	/ w i k i p e d i a (enter)
+	/ (enter)
+	k
+	d d
+	d d
+	d d
+	/ < ! - - (enter)
+	d 7 (right arrow)
+	: w q (enter)
+
+1.3v)
+	/ A s s i g n m e n t (SP) 1 (enter)
+	e 
+	e
+	d (right arrow)
+	i 3 5 (esc)
+	/ (enter)
+	e 
+	e
+	d (right arrow)
+	i 3 5 (esc)	
+	g g
+	/ U T F (enter)
+	d w
+	d w 
+	d w
+	i U S - A S C I I (esc)
+	/ < o l > (enter)
+	o (esc)
+	: w q (enter)
+
+1.4v)
+	G
+	k k k k
+	y y 
+	: 2 6 5 (enter)
+	j j j
+	p
+	k
+	d d
+	d (right arrow)
+
+	(shift) G
+	1 0 k
+	4 k		
+	0 v
+	j j $
+	y
+	: 2 3 0 (enter)
+	3 j
+	p
+	d (right arrow)
+	j
+	d (right arrow)
+	j 0
+	d (right arrow)	
+
+	(shift) G
+	2 0 k
+	2 k
+	y y
+	: 9 1 (enter)
+	2 j
+	p
+	d (right arrow)
+
+	(shift) G
+	3 0 k
+	v 
+	$ 
+	y
+	: 1 6 (enter)
+	p
+	
+	(shift) G
+	3 0 k
+	6 k
+	0
+	v
+	(shift) G
+	$	
+	d
+	u
+
+	0
+	i
+	< !
+	(esc)
+	7 j
+	i
+	< ! - -
+	(esc)
+	8 j
+	i
+	< ! - -
+	(esc)
+	8 j
+	$
+	i
+	< ! - -
+	(esc)
+	2 j
+	i
+	< ! - -
+	(esc)
+	7 j
+	$
+	4 h
+	i
+	< ! - -
+	(esc)
+	(shift) G
+	$
+	a
+	- - >
+	(esc)
+	? < o l >
+	n n n n n
+	: % s / < o l > / < O l > / g (enter)
+	: w q
+	
+1.1e)
+	C-s ASCII (enter)
+	M-<
+	C-s Instructions (enter)
+	M-<
+	C-s HTML (enter)
+	M-<
+	C-s hunt
+	C-e
+	C-a
+	M-<
+	C-x C-c
+
+1.2e)
+	M-x goto-line (enter)
+	16 (enter)
+	C-k
+	C-s DELETEME (enter)
+	C-a C-k
+	M-<
+	C-s wikipedia 
+	C-s
+	C-p
+	C-a
+	C-k C-k 
+	C-k C-k
+	C-k C-k
+	C-s <!-- (enter)
+	C-b C-b C-b C-b
+	C-d C-d C-d C-d C-d C-d C-d 
+	C-x C-s
+	C-x C-c
+
+1.3e)
+	C-s Assignment 1 (enter)
+	C-b C-d 35
+	C-s C-s
+	C-b C-d 35
+	M-<	
+	C-s UTF-8 (enter)
+	M-backSP M-backSP
+	'US-ASCII
+	C-s <ol 
+	C-e
+	(enter)
+	C-x C-s
+	C-x C-c
+	
+1.4e)
+	M->
+	C-p C-p C-p C-p C-p
+	C-k C-y
+	M-x goto-line (enter)
+	267 (enter)
+	C-n C-n C-n
+	C-y
+	C-k
+	C-a C-d
+	M->
+	C-p (x15)
+	C-k C-k C-k C-k C-k
+	C-y
+	M-x goto-line (enter)
+	232 (enter)
+	C-n C-n C-n
+	C-y
+	C-p C-p
+	C-a C-d
+	C-n C-d
+	C-n C-d
+	M->
+	C-p (x24)
+	C-k C-y
+	M-x goto-line (enter)
+	92 (enter)
+	C-n C-n C-n
+	C-y C-a C-d
+	M->
+	C-p (x34)
+	C-k C-y
+	M-x goto-line (enter)
+	13 (enter)
+	C-n C-n C-n
+	C-y C-a C-d
+
+	M->
+	C-SP
+	M-v
+	C-p (x6)
+	C-w
+	C-x u
+	M-v
+	C-p (x6)
+	<!
+	C-n (x8)
+	C-a
+	<!--
+	C-n (x9)
+	C-a
+	<!--
+	C-n (x11)
+	C-a
+	<!--
+	C-n (x7)
+	C-e
+	M-b C-b C-b C-b
+	<!--
+	M->
+	-->
+	
+	M-<
+	M-x replace-string (enter)
+	<ol> (enter)
+	<Ol> (enter) (replaced 5 occurrences)
+	
+	C-x C-s
+	C-x C-c
+	

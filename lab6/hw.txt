@@ -1,0 +1,34 @@
+ 1. Suppose the other teams really had been observing all the bytes going 
+across the network. Is your resulting network still secure? If so, explain why, 
+and explain whether your answer would change if (1) you assumed the other teams 
+had also tapped your keyboards and had observed all of your team's keystrokes, 
+or (2) you are booting off USB and you assume the other teams temporarily had 
+physical control of the USB. If not, explain any weaknesses of your team's 
+setups, focusing on possible attacks by such outside observers.
+
+If the other teams were observing the packets going accross the network, the 
+network would still be secure as all data sent to the server from the client 
+will be encrypted with the server's public key and all data from the server to 
+the client will be encrypted with the public key copied to the server using the 
+command ssh-copy-id
+
+If the other teams had tapped my keyboard, the connection would no longer be 
+secure as they would know the password for the user on the server and could set 
+up their own ssh connection with the server.
+
+If the other teams had control of the USB I was booting off of, the connection 
+would no longer be secure as they could copy my ssh key and pretend to be me to 
+the server without needing a password of any kind.
+
+--------------------------------------------------------------------------------
+
+ 2. Explain why the gpg --verify command in the following instructions doesn't 
+really verify that you personally created the tar file in question. How would 
+you go about fixing this problem?
+
+Anybody could generate a gpg key and input my name and email address as its 
+properties. Unless I have my key memorized, I would not know that it was my key 
+the file was signed with. gpg --verify only checks that the public and private 
+keys match, but does not check who their owner is. To fix this, I would encrypt 
+the file as well as sign it. Assuming that only I have the means to decrypt my 
+file, I would be able to confirm that it is mine.

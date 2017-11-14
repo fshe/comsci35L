@@ -1,0 +1,162 @@
+cat .bash_history
+rm .bash_history
+clear
+kls
+clear
+ls
+man man
+less .bash_history
+cd /usr/bin
+ls cp
+ls wc
+cd /usr/sbin
+ls
+clear
+ls cp
+cd /bin
+ls cp
+q
+w
+e
+r
+t
+y
+u
+i
+o
+p
+a
+s
+d
+f
+g
+h
+j
+k
+l
+z
+x
+c
+v
+b
+n
+m
+,
+.
+/
+<
+>
+?
+;
+'
+:
+"
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+!
+@
+#
+$
+%
+whatis #
+&
+*
+(
+)
+-
+=
+_
++
+`
+~
+whatis w
+man cron
+exit
+less .bash_histry
+less .bash_history
+exit
+less .bash_history
+ls
+cc
+man -K symbolic link follow
+man symlink
+man link
+man readlink
+readlink /usr/bin/cc
+man readlink
+readlink -f /usr/bin/cc
+man chmod
+man -K alternative to find
+man find
+man -K alternative to find
+man tsearch
+whatis search
+whatis find
+whatis locate
+man locate
+man find
+find -ctime -3
+man find
+find -ctime -3 -type d
+whereis find
+cd /usr/bin
+ls find
+cd /bin
+ls find
+man ls
+man ls
+ls --file-type
+man ls
+cd /usr/lib
+clear
+man ls
+ls -t
+ls -1 -t
+man ls
+ls -1 -a -t
+ls -1 -t
+ls --help
+ls --help | less
+(ls -1 -t -l
+who
+whoami
+whereis libsqlite
+whereis cat
+whatis whoami
+vim
+man locale
+locale
+whereis locale
+cd /usr/lib
+ls locale
+ls -l locale
+cd /usr/share
+ls locale
+ls locale | less
+cd locale
+ls
+ls -1
+ls -1 | less
+man ls
+ls -1 --group-directories-first
+cat locale.alias
+ls -1 --group-directories-first
+cat all_languages
+locale
+clear
+loclae
+locale
+man locale
+locale -a
+less all_languages
+clear
+ls
+exit

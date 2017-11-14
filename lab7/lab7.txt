@@ -1,0 +1,136 @@
+emacs catb.c
+emacs catu.c
+write code for catb and catu
+
+cc catb.c -o catb
+cc catu.c -o catu
+compile catb and catu
+
+./catb
+./catu
+test catb and catu
+
+dd if=/dev/urandom of=testfile bs=5000000 count=1
+generate file with 500 byte size
+
+ls -l
+less testfile
+check testfile
+
+man strace
+strace -c ./catb < testfile
+
+==OUTPUT==
+
+------ ----------- ----------- --------- --------- ----------------
+ 99.43    0.040469           2     19831           write
+  0.53    0.000216           0      1223           read
+  0.04    0.000018           5         4           mprotect
+  0.00    0.000000           0         2           open
+  0.00    0.000000           0         2           close
+  0.00    0.000000           0         4           fstat
+  0.00    0.000000           0        10           mmap
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         1           brk
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.040703                 21081         1 total
+
+==========
+
+strace -c ./catu < testfile
+
+==OUTPUT==
+
+------ ----------- ----------- --------- --------- ----------------
+ 79.76    1.196366           0   5000000           write
+ 20.24    0.303571           0   5000002           read
+  0.00    0.000032          32         1           arch_prctl
+  0.00    0.000000           0         2           open
+  0.00    0.000000           0         2           close
+  0.00    0.000000           0         2           fstat
+  0.00    0.000000           0         8           mmap
+  0.00    0.000000           0         4           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         1           brk
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         1           execve
+------ ----------- ----------- --------- --------- ----------------
+100.00    1.499969              10000025         1 total
+
+===========
+
+number of syscalls for catb and catu when outputted to stdout
+
+strace -c ./catb < testfile > /dev/null
+
+==OUTPUT==
+
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 70.99    0.000482           0      1223           read
+ 29.01    0.000197           0      1221           write
+  0.00    0.000000           0         2           open
+  0.00    0.000000           0         2           close
+  0.00    0.000000           0         4           fstat
+  0.00    0.000000           0        10           mmap
+  0.00    0.000000           0         4           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         1           brk
+  0.00    0.000000           0         1         1 ioctl
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000679                  2472         2 total
+
+==========
+
+strace -c ./catu < testfile > /dev/null
+
+==OUTPUT==
+
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 51.85    1.096445           0   5000002           read
+ 48.15    1.018143           0   5000000           write
+  0.00    0.000000           0         2           open
+  0.00    0.000000           0         2           close
+  0.00    0.000000           0         2           fstat
+  0.00    0.000000           0         8           mmap
+  0.00    0.000000           0         4           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         1           brk
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    2.114588              10000025         1 total
+
+=========
+number of syscalls for catb and catu when output redirected to /dev/null
+
+
+time ./catb < testfile
+
+==OUTPUT==
+
+real  0m0.214s
+user  0m0.212s
+sys   0m0.001
+
+==========
+
+time ./catu < testfile
+
+==OUTPUT==
+
+real  0m5.058s
+user  0m0.776s
+sys   0m4.257s
+
+==========
+
+time speed of programs

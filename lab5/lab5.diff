@@ -1,0 +1,22 @@
+Date: Fri, 3 May 2013 23:06:30 -0700
+Subject: [PATCH] ls: correct ordering of time in ls -lt
+
+Previously, ls -lt treated times in the distant past as times in the far 
+future (i.e. 1918-11-11 11:00 GMT). This patch fixes the overflow problem
+for such instances.
+
+* lib/timespec.h: added overflow check to return the correct value.
+
+--- a/lib/timespec.h	2005-09-21 23:05:39.000000000 -0700
++++ b/lib/timespec.h	2013-04-30 23:06:30.586573068 -0700
+@@ -46,6 +46,10 @@
+ timespec_cmp (struct timespec a, struct timespec b)
+ {
+   int diff = a.tv_sec - b.tv_sec;
++  if( (a.tv_sec < 0 && b.tv_sec > 0 && diff > 0 ) ||
++      (a.tv_sec > 0 && b.tv_sec < 0 && diff < 0 ))
++      diff = a.tv_sec;
++
+   return diff ? diff : a.tv_nsec - b.tv_nsec;
+ }
+ 

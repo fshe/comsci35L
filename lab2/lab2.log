@@ -1,0 +1,153 @@
+export LC_ALL='C'
+sets all locale variables to C.
+
+cat /usr/share/dict/words | sort > words
+sorts the contents of words and outputs it to a local file.
+
+tr -c 'A-Za-z' '[\n*]' 
+replaces anything that isn't a letter (because of the
+-c) with a newline, and isolates words (sets of letters separated by
+non-letters).
+
+tr -cs 'A-Za-z' '[\n*]' 
+removes extra newlines from the last command (the -s
+squeezes the output).
+
+tr -cs 'A-Za-z' '[\n*]' | sort 
+sorts the words from the previous command in
+alphabetical album.
+
+tr -cs 'A-Za-z' '[\n*]' | sort -u 
+does the same as the last command, but
+without repeating words (-u makes it unique).
+
+tr -cs 'A-Za-z' '[\n*]' | sort -u | comm - words 
+organizes words from the last
+command and the file words so that a word only in the command is in column 1,
+words only in the file words are in column 2, and words in both are in column
+3 (comm compares the files line by line).
+
+tr -cs 'A-Za-z' '[\n*]' | sort -u | comm -23 - words 
+does the same as the last
+command, but only outputs the ones that are only in the command (the
+'misspelled' ones). The -23 flag suppresses column 2 and 3. Its biggest flaw
+is that it considers any words that contain capital letters to be mispelled.
+
+
+-----------------------------------------------------------------------------
+all commands from here have been found with research and testing that has not
+pbeen included. each line of the sed scripts and regexes were tested several
+times on constructed tests and lines from the actual html file. The number of
+hawaiian lines parsed from the html file initially (198) was different than
+the number of rows in the table of the html page (211), and had to be
+corrected for.
+
+tdmatch=$( cat <<EOF
+<td>[A-Za-z0-9'\",= </>]*</td>
+EOF
+)
+
+
+{
+    while read line
+    do
+	expr "$line" : "$tdmatch" > /dev/null
+	if [ $? -eq 0 ]
+	then
+	    echo  $line
+	else
+	    nsline=$(echo "$line" | sed 's/[[:space:]]//g')
+	    echo  $nsline
+	fi
+    done
+} |
+
+
+reads every line from stdin. If it matches tdmatch (is a word in between td
+tags), then it is outputted as is. otherwise, it is stripped of all spaces.
+
+tr -d "\015" | tr -d '\n' |
+
+removes the character \015 (an artifact of the last command) and then strips
+the file of newlines, making it easier to match the pattern "<tr>
+<td>Eword</td> <td>Hword</td>".
+
+sedscript1=$( cat <<EOF
+s/<tr>/\n<tr>/g;
+s/\`/'/g;
+s/?//g;
+s/(//g;
+s/)//g;
+EOF
+)
+
+sed -e "$sedscript1" |
+
+replaces ` in the html with ', as instructed, and also removes ?, ( and ). In
+addition, this section adds a newline before each <tr> to make matching the
+pattern "<tr> <td>Eword</td> <td>Hword</td>" easier.
+
+trmatch=$( cat <<EOF
+<tr><td>[A-Za-z0-9'\",= </>]+</td><td>[A-Za-z', </>\]+</td></tr>
+EOF
+)
+
+egrep "$trmatch" |
+
+only outputs lines that match the pattern
+"<tr><td>Eword</td><td>Hword</td>". This makes it easier to isolate the
+hawaiian words.
+
+sedscript2=$( cat <<EOF
+s/<\/td><td>/#/;
+s/<tr>//g;
+s/<\/tr>//g;
+s/<td>//g;
+s/<\/td>//g;
+s/[0-9A-Za-z'",= <\/>]*#\([A-Za-z', <\/>]*\)/\1/g;
+s/<u>//g;
+s/<\/u>//g;
+s/, /#/g;
+s/,/#/g;
+s/ /#/g;
+s/#/\n/g;
+EOF
+)
+
+sed -e "$sedscript2" |
+
+replaces the divider </td><td> between Eword and Hword with #,
+removes all <tr>,</tr>,<td>, and </td> tags, isolates the hawaiian word from
+the pattern Eword#Hword, removes all underline tags, and replaces commas and
+spaces with newlines, making a list of hawaiian words that are separated by
+newlines.
+
+{
+    while read line
+    do
+	tr '[:upper:]' '[:lower:]' <<< "$line"
+    done
+}|
+
+converts all uppercase letters to lowercase. <<< "$line" allows stdin to be
+the variable line.
+
+sort -u
+
+sorts the words and removes all duplicates.
+
+cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | tr '[:upper:]' '[:lower:]'| sort
+-u | comm -23 - hwords
+
+checks the hawaiian spelling of the assignment page. found 408 misspelled words.
+
+cat assign2.html | tr -cs 'A-Za-z' '[\n*]' | tr '[:upper:]' '[:lower:]' | sort
+-u | comm -23 - words
+
+checks the english spelling of the assignment page. found 39 misspelled words.
+
+The hawaiian spell check caught regular english words like awk, b, bar, able,
+cased, error, etc. as well as words like okina, ndash, eggert and posix, while
+the english spell check caught the hawaiian words halau and wiki (though it
+was probably not used in a hawaiian context) along with words that both found
+wrong like ndash and eggert.

@@ -1,0 +1,40 @@
+==MOST DANGEROUS==
+
+
+*VU#945216 SSH CRC32 attack detection code contains remote integer overflow 
+this vulnerability is the most dangerous as it allows a non-user on the server
+to execute code as the root user and modify the system more than other
+exploits. It would require the use of malicious code on the local system and
+would be rather difficult to execute, as crafting custom packets and storing
+custom values in hash table through ssh.
+
+
+*VU#774103 Linux kernel perf_swevent_enabled array out-of-bound access
+	   privilege escalation vulnerability 
+this vulnerability would allow a local user to gain root access to a server
+and change the server as they wanted. This exploit is relatively easier as it
+uses an array overflow instead of an integer overflow, but requires the
+exploiter to have an account on the server.
+
+
+*VU#237655 Microsoft Internet Explorer 8 CGenericElement object use-after-free
+	   vulnerability 
+this vulnerability is more dangerous than TFTPD hole because it
+allows the exploiter to run code. It would be fairly simple to set up a
+website exploiting this hole, and the malicious code would hit a wide range of
+systems. An exploit involving a webpage that takes advantage of this hole
+would be relatively easy and would hit a wide range of systems.
+
+*VU#127108 Serva32 2.1.0 TFTPD service buffer overflow vulnerability 
+this vulnerability would not allow the user to exploit the server or make it
+run code, but would make it easy to crash the server, only requiring a
+suitably formatted attack string. This attack would be extremely plausible,
+but would cause less damage than other attacks.
+
+*VU#912420 IBM Notes runs arbitrary JAVA and Javascript in emails
+this vulnerability would be the easiest to exploit, but the hardest to do
+damage with. It owuld be simple to embed JAVA and Javascript, but since JAVA
+and Javascript are quite insulated from the operating system, it would be
+tough to do damage with this attack.
+
+==LESS DANGEROUS==

@@ -1,0 +1,77 @@
+#!/bin/bash
+
+sedscript1=$( cat <<EOF
+s/<tr>/\n<tr>/g;
+s/\`/'/g;
+s/?//g;
+s/(//g;
+s/)//g;
+EOF
+)
+
+sedscript2=$( cat <<EOF
+s/<\/td><td>/#/;
+s/<tr>//g;
+s/<\/tr>//g;
+s/<td>//g;
+s/<\/td>//g;
+s/[0-9A-Za-z'",= <\/>]*#\([A-Za-z', <\/>]*\)/\1/g;
+s/<u>//g;
+s/<\/u>//g;
+s/, /#/g;
+s/,/#/g;
+s/ /#/g;
+s/#/\n/g;
+EOF
+)
+
+tdmatch=$( cat <<EOF
+<td>[A-Za-z0-9'\",= </>]*</td>
+EOF
+)
+
+trmatch=$( cat <<EOF
+<tr><td>[A-Za-z0-9'\",= </>]+</td><td>[A-Za-z', </>\]+</td></tr>
+EOF
+)
+
+
+
+{
+    while read line
+    do
+	expr "$line" : "$tdmatch" > /dev/null
+	if [ $? -eq 0 ]
+	then
+	    echo  $line
+	else
+	    nsline=$(echo "$line" | sed 's/[[:space:]]//g')
+	    echo  $nsline
+	fi
+    done
+} | tr -d "\015" | tr -d '\n' |
+sed -e "$sedscript1" |
+egrep "$trmatch" |
+sed -e "$sedscript2" |
+{
+    while read line
+    do
+	tr '[:upper:]' '[:lower:]' <<< "$line"
+    done
+}|
+<<<<<<< HEAD
+sort |
+{
+    pline=
+    while read line
+    do
+	if [ "$pline" != "$line" ]
+	then
+	    echo "$line"
+	fi
+	pline="$line"
+    done
+}
+=======
+sort -u
+>>>>>>> b6d5d78bf56c283877a3beb6c5748d28816b8dff

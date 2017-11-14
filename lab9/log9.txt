@@ -1,0 +1,42 @@
+#!/bin/bash
+
+cat /dev/urandom | 
+od -N 800000 -f | 
+sed -e 's/[0-9]*[ ]*\([0-9\-+e\.]*[ ]*[0-9\-+e\.]*[ ]*[0-9\-+e\.]*[ ]*[0-9\-+e\.]*\)/\1/' | 
+sed -e 's/[ ][ ]*/\n/g' > nums
+#generate nums by piping cat into od into sed.
+
+time -p  sort -g < nums > /dev/null
+#time sort with a single thread
+
+#real 1.59
+#user 1.59
+#sys 0.00
+
+time -p   /usr/local/cs/bin/sort -g --parallel=1 < nums  > /dev/null
+
+#real 1.73
+#user 1.72
+#sys 0.00
+
+time -p   /usr/local/cs/bin/sort -g --parallel=2 < nums  > /dev/null
+
+#real 1.04
+#user 1.93
+#sys 0.00
+
+time -p   /usr/local/cs/bin/sort -g --parallel=4 < nums  > /dev/null
+
+#real 1.07
+#user 1.93
+#sys 0.00
+
+time -p   /usr/local/cs/bin/sort -g --parallel=8 < nums  > /dev/null
+
+#real 1.00
+#user 1.88
+#sys 0.00
+
+#time  the sort with 1, 2, 4 and 8 threads
+
+

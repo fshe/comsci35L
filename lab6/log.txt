@@ -1,0 +1,49 @@
+sudo apt-get install openssh-client openssh-server
+install openssh client and server (if any package is already installed, 
+apt-get will skip it.)
+
+ssh -X saketh@lnxsrv01.seas.ucla.edu
+test ssh with port forwarding on seasnet server
+
+--------
+|SERVER|
+--------
+ssh-keygen
+generate a key to authenticate with
+
+sudo useradd -m client
+create the client user
+
+sudo passwd client
+generate a password for the client
+
+cd /home/client
+sudo mkdir .ssh
+sudo chown -R client .ssh
+sudo chmod 700 .ssh
+create a .ssh directory for the client, give the client ownership,
+and set the directory's permissions appropriately.
+
+ifconfig
+print out the local ip address of the current machine
+
+--------	
+|CLIENT|
+--------
+ssh-agent
+ensures that ssh-agent is running
+
+ssh-add
+adds current key to ssh-agent
+
+ssh-copy-id -i teammate@10.97.85.150
+copies id to server
+
+ssh -X teammate@10.97.85.150
+test ssh with port forwarding on server
+
+(on remote machine)
+gedit
+firefox
+test ssh with port forwarding on server
+

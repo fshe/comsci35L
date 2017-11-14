@@ -1,0 +1,108 @@
+wget ftp://ftp.gnu.org/gnu/coreutils/coreutils-7.6.tar.gz
+downloads the coreutils file.
+
+mkdir original
+makes a file for the built executables.
+
+tar xvf coreutils-7.6.tar.gz 
+extracts the coreutils source code.
+
+cd coreutils-7.6/
+moves to the extracted coreutils source code.
+
+./configure --prefix /home/ubuntu/UCLA/spring1/CS-35l-labs/lab3/original
+generates a makefile with the listed directory as the target.
+
+make
+compiles the source code.
+
+make install
+moves compiled executables to the correct directory.
+
+cd ..
+cd original/
+cd bin
+move to compiled directory
+
+./echo hello world
+testing echo
+
+./wc
+testing wc
+
+ls -l
+clear
+testing system ls
+
+./ls -l
+clear
+testing compiled ls
+
+cd ..
+cd ..
+cd coreutils-7.6/
+move to source directory.
+
+less ../../main.patch
+checking contents of patch
+
+patch -p0 <../main.patch 
+apply patch
+
+make | tee ../make-output
+outputs results of make to stdout and make-output for logs.
+
+=============================================================================
+
+make  all-recursive
+executes the all-recursive target in makefile. Recursively compiles.
+
+make[2]: Entering directory
+`/home/ubuntu/UCLA/spring1/CS35L/cs-35l-labs/lab3/coreutils-7.6/lib'
+makes libraries for reference by executable files.
+
+Making all in src
+makes all executable files in the src directory (ls, wc, etc.)
+
+  CC     ls.o
+recompiles ls.o as ls was changed.
+
+  CCLD   dir
+recompiles dir, as it depends on ls
+
+  CCLD   vdir
+recompiles vdir, as it depends on ls
+
+  CCLD   ls
+recompiles ls as it has changed.
+
+  GEN    dir.1
+regenerates man pages for dir (not necessary)
+
+  GEN    vdir.1
+regenerates man pages for vdir (not necessary)
+
+  GEN    ls.1
+regenerates man pages for ls (not necessary)
+
+
+============================================================================
+
+
+cd src
+go to compiled programs
+
+../../original/ls -l
+testing system ls
+
+./ls -l
+testing patched ls
+
+touch yes.c -t 199409060000.00
+modify file to have date more than a year old
+
+./ls -l
+testing patched ls
+
+../../original/ls -l
+testing original ls

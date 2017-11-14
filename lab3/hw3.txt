@@ -1,0 +1,19 @@
+1)
+"case_long_iso_time_style:" was changed into  "case long_iso_time_style:",
+because "case_long_iso_time_style:" is considered a label, and is never
+accessed. because of the break statement preceding it, this label is never
+reached. These problems are fixed by changing "case_long_iso_time_style:" to
+"case long_iso_time_style:".
+
+2)
+A potential problem is the format Y-M-D, with which the month and day are
+numbers and could be confused in countries where Y-D-M is used instead,
+whereas writing out the name of the month cannot be confused.
+
+3)
+When the script is invoked on /dev/null, python raises and IndexError if the
+sequence that random.choice is choosing from is empty.
+
+4)
+python 3 gives an invalid syntax error on the line "except IOError as (errno,
+strerror)", as IOError cannot be renamed as errno and strerror.

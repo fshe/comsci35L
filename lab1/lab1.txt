@@ -1,0 +1,35 @@
+1. man -k (man man on ubuntu)
+2. /bin/cp; /usr/bin/wc (whereis on ubuntu)
+3. w: Show who is logged on and what they are doing (whatis w on ubuntu)
+4. any commands that are skipped due to daylight savings time are run at 3
+when the time goes forward. when the they are run only once when the time goes
+back as well.
+     (man cron on ubuntu)
+5. /usr/bin/gcc (readlink -e on ubuntu)
+6. chmod g-s turns the bit to set user or group ID on execution off for all
+members of the file's group. 
+	(man chmod on ubuntu)
+7. locate, because it keeps track of files with a database rather than
+serachingthe actual filesystem.
+	     (man -k search on ubuntu)
+8. -ctime -3
+   (man find on ubuntu)
+9. find -ctime -3 -type d
+   (man find on ubuntu)
+10. 18
+    (whereis find \n
+     cd where find is \n
+     ls \n (count the number of links by color)
+     on ubuntu
+     )
+11. Richard M. Stallman and David MacKenzie
+    (man ls)
+12. libsqlite3.so.0.8.6
+    (ls -1 -t -l. the last file that isn't a symlink is the file you want)
+13. whoami, whatis, whereis (man -k wh)
+14. if the cursor is within a word, 'dw' will delete all letters until it
+encounters whitespace. if the cursor is on whitespace, it will delete all
+whitespace until it reaches a character. 
+(open vim and experiment)
+15. /usr/share/locale/all_languages 
+(whereis locale. the directory we want is under /usr/share.)

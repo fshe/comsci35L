@@ -1,0 +1,57 @@
+time ./srot13 < /usr/share/java/js.jar > /dev/null
+
+real  0m0.080s
+user  0m0.074s
+sys   0m0.005s
+
+time ./srot13u < /usr/share/java/js.jar > /dev/null
+
+Number of comparisons: 54115
+
+real  0m1.112s
+user  0m0.197s
+sys   0m0.888s
+
+time ./srot13 < testfile > /dev/null
+
+real  0m0.353s
+user  0m0.326s
+sys   0m0.024s
+
+time ./srot13u < testfile > /dev/null
+
+Number of comparisons: 253037
+
+real  0m5.124s
+user  0m0.964s
+sys   0m4.126s
+
+wc -l bashhistory lab7.txt srot13.c srot13u.c srot13.txt testfile 
+   1000 bashhistory
+    136 lab7.txt
+    145 srot13.c
+    162 srot13u.c
+     27 srot13.txt
+  19463 testfile
+  20933 total
+
+./srot13u < bashhistory > /dev/null
+Number of comparisons: 8493
+
+./srot13u < lab7.txt > /dev/null
+Number of comparisons: 745
+
+./srot13u < srot13.c > /dev/null
+Number of comparisons: 837
+
+./srot13u < srot13u.c > /dev/null
+Number of comparisons: 963
+
+./srot13u < srot13.txt > /dev/null
+Number of comparisons: 100
+
+./srot13u < testfile > /dev/null
+Number of comparisons: 253037
+
+
+Number of comparisons ~= 2.8342*(Number of lines)log(Number of lines)-9.532

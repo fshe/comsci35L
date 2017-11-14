@@ -1,0 +1,52 @@
+git clone git://git.savannah.gnu.org/diffutils.git
+---get diffutils drom gnu savannah
+
+cd diffutils/
+
+git checkout v3.0
+git checkout -b quote
+---checkout v3.0 and make it a new branch
+
+cp ../quote-3.0-patch.txt .
+patch -p1 < quote-3.0-patch.txt 
+---patches current branch
+
+emacs ChangeLog-2008 
+---edit changelog to reflect changes
+
+rm quote-3.0-patch.txt 
+git add .
+---clean up and stage changes for commit
+
+git status
+git commit 
+---check staged changes and commit. type message into vim.
+
+git format-patch -1 HEAD
+mv 0001-maint-quote-like-this-or-like-this-not-like-this.patch
+formatted-patch.txt
+---create formatted patch from HEAD and move it to formatted-patch.txt
+
+git checkout v3.0
+git checkout -b tmp
+---create temporary branch
+
+man git-am
+git am < formatted-patch.txt 
+---apply formatted patch changes
+
+cd /usr/local/cs/help2man-1.40.12/bin/
+cp help2man /u/cs/ugrad/saketh/CS35L/lab4/diffutils
+cd ../gperf-3.0.4/bin/
+cp gperf /u/cs/ugrad/saketh/CS35L/lab4/diffutils
+cd /u/cs/ugrad/saketh/CS35L/lab4/diffutil
+echo $PATH
+export PATH=$PATH:.
+export PATH=$PATH:/u/cs/ugrad/saketh/CS35L/lab4/diffutils
+---move appropriate executables for build and change the path
+
+./bootstrap
+./configure
+make
+make check
+---build and check

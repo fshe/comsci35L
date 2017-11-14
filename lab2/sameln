@@ -1,0 +1,33 @@
+#!/bin/bash
+
+find $1 -maxdepth 1 -type f | 
+{
+    while read line
+    do
+	check=`cksum $line`
+	if [ $? -eq 0 ]
+	then
+	    echo `cksum $line`
+	fi
+    done
+} |
+LC_COLLATE=C sort |
+{
+    pline=
+    while read line
+    do
+	cksum=`sed 's/\([0-9]* [0-9]*\) [\.a-zA-Z0-9\/~\*\-]*/\1/' <<< $line`
+	pcksum=`sed 's/\([0-9]* [0-9]*\) [\.a-zA-Z0-9\/~\*\-]*/\1/' <<< $pline`
+	
+	if [[ $cksum = $pcksum ]]
+	then
+	    file=`sed 's/[0-9]* [0-9]* \([\.a-zA-Z0-9\/~\*\-]*\)/\1/' <<< $line`
+	    pfile=`sed 's/[0-9]* [0-9]* \([\.a-zA-Z0-9\/~\*\-]*\)/\1/' <<< $pline`
+	    rm $file
+	    ln $pfile $file
+	    echo removed $file, a duplicate of $pfile
+	else
+	    pline=$line
+	fi
+    done
+}

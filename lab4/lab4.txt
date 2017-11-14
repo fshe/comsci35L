@@ -1,0 +1,112 @@
+git clone git://git.savannah.gnu.org/diffutils.git
+---fetch the code from gnu savannah
+
+cd diffutils/
+
+git log | tee git-log.txt
+---pipe git log into stdout and git-log.txt
+
+git tag | tee git-tags.txt
+---pipe git tag into stdout and git-tag.txt
+
+git format-patch -1 62ca21c8c1a5aa3488589dcb191a4ef04ae9ed4f
+---create a patch from the commit with the given sha
+
+mv 0001-maint-quote-like-this-or-like-this-not-like-this.patch quote-patch.txt
+mv git-log.txt git-tags.txt quote-patch.txt ..
+
+git checkout v3.0
+---get version 3.0 of diffutils
+
+cp ../quote-patch.txt .
+
+patch -p1 < quote-patch.txt 
+---patch v3.0 with the patch
+
+git status
+---check which files were changed
+
+emacs
+---edit and remove indicated changes.
+
+ls src/*.c.rej
+less src/diff.c.rej
+less src/diff3.c.rej
+emacs
+---check rejected hunks and manually change them
+
+git status
+rm NEWS.orig 
+rm README-hacking.orig
+rm README-hacking.rej
+rm README.rej
+rm README.orig
+rm cfg.mk.orig
+rm cfg.mk.rej
+rm ms/config.site.orig 
+rm quote-patch.txt 
+rm src/cmp.c.orig 
+rm src/context.c.orig 
+rm src/diff.c.orig 
+rm src/diff.c.rej
+rm src/diff.h.orig 
+rm src/diff3.c.rej
+rm src/diff3.c.orig
+rm src/dir.c.orig
+rm src/sdiff.c.orig
+rm src/system.h.orig
+rm src/util.c.orig
+rm tests/help-version.orig
+---delete all unnecessary files
+
+
+git status
+git diff | wc -l
+git diff | tee quote-3.0-patch.txt
+---create a patch from git diff
+
+echo $PATH
+export PATH=$PATH:.
+export PATH=$PATH:/u/cs/ugrad/saketh/CS35L/lab4/diffutils
+cd /usr/local/cs/help2man-1.40.12/bin/
+cp help2man /u/cs/ugrad/saketh/CS35L/lab4/diffutils
+cd ../../gperf-3.0.4/bin/
+cp gperf /u/cs/ugrad/saketh/CS35L/lab4/diffutils
+cd /u/cs/ugrad/saketh/CS35L/lab4/diffutils
+---copy necessary executables so that we can compile diffutils
+
+./bootstrap
+./configure
+make
+---build diffutils
+
+cd src
+
+./diff . -
+./diff --help
+---test the patched diff
+
+mkdir diffutils-3.0-patch/
+cp *.c diffutils-3.0-patch/
+mv diffutils-3.0-patch/ ../..
+
+
+cp diff ../..
+git stash save --keep-index
+git stash drop
+---reset to v3.0
+
+mkdir diffutils-3.0/
+cp *.c diffutils-3.0/
+mv diffutils-3.0/ ../..
+
+cd ../..
+
+./diff -pru diffutils-3.0 diffutils-3.0-patch >quote-3.0-test.txt
+---compare the c files 
+
+cp quote-3.0-test.txt ../..
+cd ../..
+./diff quote-3.0-test.txt quote-3.0-patch.txt
+---compare the patch files. they are trivially different (different base
+directory names, command names, etc.)

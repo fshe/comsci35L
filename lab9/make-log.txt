@@ -1,0 +1,40 @@
+rm -f *.o *.ppm *.tmp srt srt.tgz
+gcc -std=gnu99 -g -O2 -Wall -Wextra -Wno-unused-parameter   -c -o main.o main.c
+main.c: In function ‘construct_ray’:
+main.c:88: warning: implicit declaration of function ‘pthread_mutex_lock’
+main.c:90: warning: implicit declaration of function ‘pthread_mutex_unlock’
+main.c:93: warning: implicit declaration of function ‘pthread_exit’
+main.c: In function ‘main’:
+main.c:276: warning: implicit declaration of function ‘pthread_mutex_init’
+main.c:300: warning: implicit declaration of function ‘pthread_create’
+main.c:343: warning: implicit declaration of function ‘pthread_join’
+gcc -std=gnu99 -g -O2 -Wall -Wextra -Wno-unused-parameter   -c -o raymath.o raymath.c
+gcc -std=gnu99 -g -O2 -Wall -Wextra -Wno-unused-parameter   -c -o shaders.o shaders.c
+gcc -std=gnu99 -g -O2 -Wall -Wextra -Wno-unused-parameter -o srt main.o raymath.o shaders.o -lm -lpthread
+time ./srt 1-test.ppm >1-test.ppm.tmp && mv 1-test.ppm.tmp 1-test.ppm
+nthreads = 1
+
+real    0m52.034s
+user    0m15.288s
+sys     0m0.648s
+time ./srt 2-test.ppm >2-test.ppm.tmp && mv 2-test.ppm.tmp 2-test.ppm
+nthreads = 2
+
+real    0m35.565s
+user    0m12.365s
+sys     0m1.058s
+time ./srt 4-test.ppm >4-test.ppm.tmp && mv 4-test.ppm.tmp 4-test.ppm
+nthreads = 4
+
+real    0m28.207s
+user    0m16.197s
+sys     0m2.685s
+time ./srt 8-test.ppm >8-test.ppm.tmp && mv 8-test.ppm.tmp 8-test.ppm
+nthreads = 8
+
+real    0m41.797s
+user    0m47.829s
+sys     0m21.575s
+for file in 1-test.ppm 2-test.ppm 4-test.ppm 8-test.ppm; do \
+          diff -u 1-test.ppm $file || exit; \
+        done
